@@ -1,3 +1,4 @@
+/*
 문제 설명
 수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.
 
@@ -24,3 +25,51 @@ participant	completion	return
 
 예제 #3
 "mislav"는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.
+*/
+
+//my
+const _reduce = (arr) => {
+  return arr.reduce((acc, cur) => {
+    if (acc[cur] === undefined) acc[cur] = 1;
+    else acc[cur]++;
+
+    return acc;
+  }, {});
+};
+
+function solution(participant, completion) {
+  const participant_state = _reduce(participant);
+
+  const completion_state = _reduce(completion);
+
+  let result = '';
+  for (const [name, number] of Object.entries(participant_state)) {
+    if (completion_state[name] === undefined) {
+      result = name;
+      break;
+    }
+    if (completion_state[name] !== number) {
+      result = name;
+      break;
+    }
+  }
+
+  return result;
+}
+
+//others
+function solution(participant, completion) {
+  // completion에 대한 Object 생성
+  const c_state = completion.reduce((acc, cur) => {
+    if (acc[cur] === undefined) acc[cur] = 1;
+    else acc[cur]++;
+
+    return acc;
+  }, {});
+
+  // Array.find()는 조건을 만족하는 첫번째 element의 value를 반환!
+  return participant.find((p) => {
+    if (c_state[p]) c_state[p]--;
+    else return true; // c_state가 undefined이거나, c_state가 0이면(완료 못한 동명이인을 의미함!)
+  });
+}

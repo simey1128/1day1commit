@@ -36,8 +36,8 @@ movezeros = function (nums) {
 };
 
 /*
-pointer idx = for non zero elements
-pointer i = iterate whole array
+pointer idx = for non zero elements ~ slow runner 
+pointer i = iterate whole array ~ fast runner
  */
 movezeros = function (nums) {
   var idx = 0;
